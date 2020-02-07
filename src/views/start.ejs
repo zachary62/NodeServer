@@ -1,58 +1,76 @@
 <html>
-  <div>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/style.css" type="text/css" />
+</head>
+<div class="rows">
+  <div class = "form">
     <div class="form-header">
-        <% if (Object.keys(errorsSql).length === 0) { %>
-          <h2>SQL</h2>
-        <% } else { %>
-          <h2 class="errors-heading">Oops, please correct the following:</h2>
-          <ul class="errors-list">
-            <% Object.values(errorsSql).forEach(error => { %>
-              <li><%= error.msg %></li>
-            <% }) %>
-          </ul>
-        <% } %>
+      <% if (Object.keys(errorsSql).length === 0) { %>
+      <h2>SQL</h2>
+      <% } else { %>
+      <h2 class="errors-heading">Oops, please correct the following:</h2>
+      <ul class="errors-list">
+        <% Object.values(errorsSql).forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+      <% } %>
     </div>
-    <form method="post" action="/database" novalidate>
-        <div class="form-field <%= errorsSql.message ? 'form-field-invalid' : '' %>">
-          <textarea class="input" name="sql" rows="4" autofocus><%= dataSql %></textarea>
-        </div>
-        <div class="form-actions">
-          <button class="btn" type="submit">Send</button>
-        </div>
-    </form>
-  </div>  
-  <div>
-    
-    <pre><%= values%></pre>
-  </div>
-  <div>
-    <div class="form-header">
-        <% if (Object.keys(errorsVega).length === 0) { %>
-          <h2>VegaLite</h2>
-        <% } else { %>
-          <h2 class="errors-heading">Oops, please correct the following:</h2>
-          <ul class="errors-list">
-            <% Object.values(errorsVega).forEach(error => { %>
-              <li><%= error.msg %></li>
-            <% }) %>
-          </ul>
-        <% } %>
-    </div>
-    <form method="post" action="/Vega" novalidate>
-        <div class="form-field <%= errorsVega.message ? 'form-field-invalid' : '' %>">
-          <textarea class="input" name="vega" rows="4" autofocus><%= dataVega %></textarea>
-        </div>
-        <div class="form-actions">
-          <button class="btn" type="submit">Send</button>
-        </div>
+    <form class = "cell" method="post" action="/database" novalidate>
+      <div class="form-field <%= errorsSql.message ? 'form-field-invalid' : '' %>">
+        <textarea class="input" name="sql"  autofocus><%= dataSql %></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Query</button>
+      </div>
     </form>
   </div>
-  <div><textarea rows="30" cols="50" id="text">
-    <%= vegalite%>
-  </textarea>
-    
+
+  <div class = "form">
+    <div class="form-header">
+      <h2>Data</h2>
+    </div>
+    <textarea class = "cell">
+      <%- values%>
+    </textarea>
   </div>
-  <div>
-    <%- plot%>
+
+</div>
+
+
+
+<div class="rows">
+  <div class="form">
+    <div class="form-header">
+      <% if (Object.keys(errorsVega).length === 0) { %>
+      <h2>VegaLite</h2>
+      <% } else { %>
+      <h2 class="errors-heading">Oops, please correct the following:</h2>
+      <ul class="errors-list">
+        <% Object.values(errorsVega).forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+      <% } %>
+    </div>
+    <form class = "cell" method="post" action="/Vega" novalidate>
+      <div class="form-field <%= errorsVega.message ? 'form-field-invalid' : '' %>">
+        <textarea class="input" name="vega"  autofocus><%= dataVega %></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Render</button>
+      </div>
+    </form>
   </div>
+  <div class = "form">
+    <div class="form-header">
+      <h2>Plot</h2>
+    </div>
+    <div class = "cell">
+      <%- plot%>
+    </div>
+  </div>
+</div>
 </html>
